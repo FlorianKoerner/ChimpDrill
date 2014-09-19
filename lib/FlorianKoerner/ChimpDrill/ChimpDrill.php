@@ -12,7 +12,7 @@ class ChimpDrill
      */
     protected $pattern = array(
         'placeholder' => '/\*\|([A-Za-z0-9_]+)\|\*/',
-        'if'          => '/\*\|(IF|IFNOT|ELSEIF):([A-Za-z0-9_]+)(?:[\s]*(=|!=|>=|<=|>|<)[\s]*(.+?))?\|\*/',
+        'if'          => '/\*\|(IF|IFNOT|ELSEIF):([A-Za-z0-9_]+)(?:[\s]*(=|!=|&gt;=|&lt;=|&gt;|&lt;)[\s]*(.+?))?\|\*/',
         'else'        => '/\*\|ELSE:\|\*/',
         'endif'       => '/\*\|END:IF\|\*/',
         'filter'      => '/\*\|(HTML|TITLE|LOWER|UPPER):([A-Za-z0-9_]+)\|\*/',
@@ -57,6 +57,7 @@ class ChimpDrill
      * 
      * @return string
      */
+
     public function getParsed()
     {
         if (false == $this->parsed) {
@@ -191,7 +192,7 @@ class ChimpDrill
         $condition = $this->getPlaceholder($match[2]);
 
         if (count($match) == 5) {
-            $condition = $this->compare($condition, $match[3], $this->getPlaceholder($match[4], $match[4]));
+            $condition = $this->compare($condition, $this->unescapeValue($match[3]), $this->getPlaceholder($match[4], $match[4]));
         } else {
             $condition = (bool) $condition;
         }

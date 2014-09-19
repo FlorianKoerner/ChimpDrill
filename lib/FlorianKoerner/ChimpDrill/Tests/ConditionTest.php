@@ -13,27 +13,96 @@ class ConditionTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array(
-                'message' => 'Hello *|BEST_FRIEND|*',
-                'placeholder' => array(
-                    'BEST_FRIEND' => 'John Doe'
-                ),
-                'expected' => 'Hello John Doe'
+                'message' => '*|IF:HAPPY|*We are Happy.*|ELSE:|*We are very sad. But why?*|END:IF|*',
+                'placeholder' => array(),
+                'expected' => 'We are very sad. But why?'
             ),
             array(
-                'message' => 'Your name is *|YOUR_NAME|* and my name is *|MY_NAME|*.',
+                'message' => '*|IF:HAPPY|*We are Happy.*|ELSE:|*We are very sad. But why?*|END:IF|*',
                 'placeholder' => array(
-                    'MY_NAME' => 'John Doe',
-                    'YOUR_NAME' => 'Jane Doe'
+                    'HAPPY' => false
                 ),
-                'expected' => 'Your name is Jane Doe and my name is John Doe.'
+                'expected' => 'We are very sad. But why?'
             ),
             array(
-                'message' => 'You live in *|NYC|* and I live in *|NYC|*. And we love *|FOOD|*.',
+                'message' => '*|IF:HAPPY|*We are Happy.*|ELSE:|*We are very sad. But why?*|END:IF|*',
                 'placeholder' => array(
-                    'NYC' => 'New York City',
-                    'FOOD' => 'fish and chips'
+                    'HAPPY' => true
                 ),
-                'expected' => 'You live in New York City and I live in New York City. And we love fish and chips.'
+                'expected' => 'We are Happy.'
+            ),
+            array(
+                'message' => 'Our happiness is *|IF:HAPPINESS > 75|*so high*|ELSEIF:HAPPINESS > 50|*ok*|ELSE:|*- wo don\'t want to talk about it*|END:IF|*.',
+                'placeholder' => array(
+                    'HAPPINESS' => 55
+                ),
+                'expected' => 'Our happiness is ok.'
+            ),
+            array(
+                'message' => 'This is *|IF:EQUAL = equal|*equal*|END:IF|*',
+                'placeholder' => array(
+                    'EQUAL' => 'equal'
+                ),
+                'expected' => 'This is equal'
+            ),
+            array(
+                'message' => 'This is *|IFNOT:EQUAL = equal|*not equal*|END:IF|*',
+                'placeholder' => array(
+                    'EQUAL' => 'not so equal'
+                ),
+                'expected' => 'This is not equal'
+            ),
+            array(
+                'message' => 'This is *|IF:NUMBER > 0|*greater than 0*|END:IF|*',
+                'placeholder' => array(
+                    'NUMBER' => 7
+                ),
+                'expected' => 'This is greater than 0'
+            ),
+            array(
+                'message' => 'This is *|IF:NUMBER < 10|*lesser than 10*|END:IF|*',
+                'placeholder' => array(
+                    'NUMBER' => 7
+                ),
+                'expected' => 'This is lesser than 10'
+            ),
+            array(
+                'message' => 'This is *|IF:NUMBER >= 0|*greater than or equal 0*|END:IF|*',
+                'placeholder' => array(
+                    'NUMBER' => 0
+                ),
+                'expected' => 'This is greater than or equal 0'
+            ),
+            array(
+                'message' => 'This is *|IF:NUMBER >= 0|*greater than or equal 0*|END:IF|*',
+                'placeholder' => array(
+                    'NUMBER' => 3
+                ),
+                'expected' => 'This is greater than or equal 0'
+            ),
+            array(
+                'message' => 'This is *|IF:NUMBER <= 10|*lesser than or equal 10*|END:IF|*',
+                'placeholder' => array(
+                    'NUMBER' => 7
+                ),
+                'expected' => 'This is lesser than or equal 10'
+            ),
+            array(
+                'message' => 'This is *|IF:NUMBER <= 10|*lesser than or equal 10*|END:IF|*',
+                'placeholder' => array(
+                    'NUMBER' => 10
+                ),
+                'expected' => 'This is lesser than or equal 10'
+            ),
+            array(
+                'message' => '*|IF:COOL|*' . PHP_EOL .
+                                 'You are cool*|IF:BEAUTIFUL|* and beautiful*|END:IF|*.' . PHP_EOL .
+                             '*|END:IF|*',
+                'placeholder' => array(
+                    'COOL' => true,
+                    'BEAUTIFUL' => true
+                ),
+                'expected' => 'You are cool and beautiful.' . PHP_EOL
             )
         );
     }
