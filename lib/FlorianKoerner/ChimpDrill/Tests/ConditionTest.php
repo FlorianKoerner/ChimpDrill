@@ -53,6 +53,13 @@ class ConditionTest extends \PHPUnit_Framework_TestCase
                 'expected' => 'This is not equal'
             ),
             array(
+                'message' => 'This is *|IF:EQUAL != equal|*not equal*|END:IF|*',
+                'placeholder' => array(
+                    'EQUAL' => 'not so equal'
+                ),
+                'expected' => 'This is not equal'
+            ),
+            array(
                 'message' => 'This is *|IF:NUMBER > 0|*greater than 0*|END:IF|*',
                 'placeholder' => array(
                     'NUMBER' => 7

@@ -157,9 +157,6 @@ class ChimpDrill
 
             case '<':
                 return ($val1 < $val2);
-
-            default:
-                throw new \InvalidArgumentException(sprintf('Operator %s isn\'t supported.', $operator));
         }
     }
 
@@ -206,9 +203,6 @@ class ChimpDrill
 
             case 'IFNOT':
                 return '<?php if (!' . $this->exportValue($condition) . '): ?>';
-
-            default:
-                throw new \InvalidArgumentException('Oops - something went totally wrong.');
         }
     }
 
@@ -254,9 +248,6 @@ class ChimpDrill
 
             case 'UPPER':
                 return strtoupper($value);
-
-            default:
-                throw new \InvalidArgumentException('Oops - something went totally wrong.');
         }
     }
 
