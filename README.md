@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/FlorianKoerner/ChimpDrill.svg)](https://travis-ci.org/FlorianKoerner/ChimpDrill)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/FlorianKoerner/ChimpDrill/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/FlorianKoerner/ChimpDrill/?branch=master)
-[![Coverage Status](https://coveralls.io/repos/DiceBear/DiceBear/badge.png)](https://coveralls.io/r/DiceBear/DiceBear)
+[![Coverage Status](https://coveralls.io/repos/FlorianKoerner/ChimpDrill/badge.png)](https://coveralls.io/r/FlorianKoerner/ChimpDrill)
 
 Parser for the merge tags syntax of [Mailchimp] and [Mandrill]. Supports
 [placeholder], [filters] and [conditions].
