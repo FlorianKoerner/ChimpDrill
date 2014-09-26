@@ -53,32 +53,45 @@ class ChimpDrill
     }
 
     /**
-     * Parse the message (If this haven't be done yet) and returns the result.
+     * Returns parsed message.
      * 
      * @return string
      */
-
     public function getParsed()
+    {
+        $this->parseMessage();
+
+        return $this->parsed;
+    }
+    
+    /**
+     * Parse the message (If this haven't be done yet).
+     * 
+     * @return ChimpDrill
+     */
+    protected function parseMessage()
     {
         if (false == $this->parsed) {
             // Escape message
-            $this->message = $this->escapeValue($this->message);
+            $message = $this->escapeValue($this->message);
 
             // Replace Syntax with PHP
             foreach ($this->pattern as $type => $pattern) {
                 $method = 'parse' . ucfirst($type);
-                $this->message = preg_replace_callback($pattern, array($this, $method), $this->message);
+                $message = preg_replace_callback($pattern, array($this, $method), $message);
             }
+            
+            // Write file
+            $file = tempnam('/tmp', 'chimpdrill-');
 
-            // Dirty, really dirty
-            $this->message = eval('ob_start(); ?>' . $this->message . '<?php return ob_get_clean();');
-            $this->message = $this->unescapeValue($this->message);
+            file_put_contents($file, '<?php ob_start(); ?>' . $message . '<?php return ob_get_clean(); ?>');
 
-            // Mark message as parsed
-            $this->parsed = true;
+            $this->parsed = $this->unescapeValue(include_once($file));
+
+            unlink($file);
         }
-
-        return $this->message;
+        
+        return $this;
     }
 
     /**
