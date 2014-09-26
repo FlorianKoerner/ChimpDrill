@@ -20,19 +20,19 @@ class ChimpDrill
     );
 
     /**
-     * @var bool parsing status
+     * @var string parsed message
      */
-    protected $parsed = false;
+    protected $parsed = null;
 
     /**
      * @var string message
      */
-    protected $message = '';
+    protected $message;
 
     /**
      * @var array placeholder
      */
-    protected $placeholder = array();
+    protected $placeholder;
 
     /**
      * @param string $message     Message to parse
@@ -71,7 +71,7 @@ class ChimpDrill
      */
     protected function parseMessage()
     {
-        if (false == $this->parsed) {
+        if ($this->parsed === null) {
             // Escape message
             $message = $this->escapeValue($this->message);
 
