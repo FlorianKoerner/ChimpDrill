@@ -126,7 +126,7 @@ class ChimpDrill
      */
     protected function escapeValue($value)
     {
-        return htmlentities($value, null, 'UTF-8');
+        return htmlspecialchars($value, null, 'UTF-8');
     }
 
     /**
@@ -138,7 +138,7 @@ class ChimpDrill
      */
     protected function unescapeValue($value)
     {
-        return html_entity_decode($value, null, 'UTF-8');
+        return htmlspecialchars_decode($value);
     }
 
     /**
