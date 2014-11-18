@@ -63,7 +63,7 @@ class ChimpDrill
 
         return $this->parsed;
     }
-    
+
     /**
      * Parse the message (If this haven't be done yet).
      * 
@@ -80,7 +80,7 @@ class ChimpDrill
                 $method = 'parse' . ucfirst($type);
                 $message = preg_replace_callback($pattern, array($this, $method), $message);
             }
-            
+
             // Write file
             $file = tempnam('/tmp', 'chimpdrill-');
 
@@ -90,7 +90,7 @@ class ChimpDrill
 
             unlink($file);
         }
-        
+
         return $this;
     }
 
@@ -126,19 +126,19 @@ class ChimpDrill
      */
     protected function escapeValue($value)
     {
-        return htmlentities($value);
+        return htmlentities($value, null, 'UTF-8');
     }
 
     /**
      * Rolls back escaping.
      * 
-     * @param $value
+     * @param string $value
      * 
      * @return string
      */
     protected function unescapeValue($value)
     {
-        return html_entity_decode($value);
+        return html_entity_decode($value, null, 'UTF-8');
     }
 
     /**
@@ -184,10 +184,10 @@ class ChimpDrill
     {
         // Yes, double escaping is correct here
         return $this->escapeValue(
-                   $this->escapeValue(
-                       $this->getPlaceholder($match[1], '*|' . $match[1] . '|*')
-                   )
-               );
+            $this->escapeValue(
+                $this->getPlaceholder($match[1], '*|' . $match[1] . '|*')
+            )
+        );
     }
 
     /**
@@ -243,6 +243,7 @@ class ChimpDrill
      * Parses `HTML|TITLE|LOWER|UPPER` filter merge tags.
      *
      * @param array $match
+     *
      * @return string
      */
     protected function parseFilter(array $match)
